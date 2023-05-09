@@ -5,44 +5,44 @@ from dictionary import *
 HOST = ''
 PORTA = 5000
 
-try:
-    # Cria o socket
-    sock = socket(AF_INET, SOCK_STREAM)
+# Cria o socket
+sock = socket(AF_INET, SOCK_STREAM)
 
-    # Associa o socket a porta
-    sock.bind((HOST, PORTA))
+# Associa o socket a porta
+sock.bind((HOST, PORTA))
 
-    # Aguarda conexões
-    sock.listen(1)
-    print("Pronto para receber conexões...")
+# Aguarda conexões
+sock.listen(5)
+print("Pronto para receber conexões...")
 
-    while True:
-        # Aceita a conexão
-        novoSock, endereco = sock.accept()
-        print('Conectado com: ', endereco)
+# Aceita a conexão
+novoSock, endereco = sock.accept()
+print('Conectado com: ', endereco)
 
-        # Recebe a mensagem do ativo
-        msg_rec = novoSock.recv(1024)
+while True:
 
-        # Converte a mensagem para string
-        msg_str = str(msg_rec,  encoding='utf-8')
-        print('Mensagem recebida: ' + msg_str)
+    # Recebe a mensagem do ativo
+    msg_rec = novoSock.recv(1024)
 
-        # Traduz a mensagem
-        msg_trad = translate(msg_str)
+    if not msg_rec:
+        break
 
-        if (msg_trad == None):
-            msg_trad = 'Palavra não encontrada'
+    # Converte a mensagem para string
+    msg_str = str(msg_rec,  encoding='utf-8')
+    print('Mensagem recebida: ' + msg_str)
 
-        # Converte a mensagem para bytes
-        msg_send = bytes(msg_trad,  encoding='utf-8')
+    # Traduz a mensagem
+    msg_trad = translate(msg_str)
 
-        # Envia a mensagem de volta
-        novoSock.send(msg_send)
+    if (msg_trad == None):
+        msg_trad = 'Palavra não encontrada'
 
-        # Fecha os socket de dados
-        novoSock.close()
+    # Converte a mensagem para bytes
+    msg_send = bytes(msg_trad,  encoding='utf-8')
 
-except KeyboardInterrupt:
-    sock.close()
-    print("Servidor encerrado.")
+    # Envia a mensagem de volta
+    novoSock.send(msg_send)
+
+# Fecha os sockets de dados
+novoSock.close()
+sock.close()

@@ -8,16 +8,22 @@ PORTA = 5000
 sock = socket(AF_INET, SOCK_STREAM)
 sock.connect((HOST, PORTA))
 
-# Le a mensagem
-msg = input()
+print('Dicionário remoto. Entre com a palavra a ser traduzida. Entre com \'fim\' para encerrar.')
 
-# Envia a mensagem
-sock.send(bytes(msg,  encoding='utf-8'))
+while True:
+    # Le a mensagem
+    msg = input('\nEntre com a palavra a ser traduzida: ')
 
-# Recebe a mensagem do passivo
-msg = sock.recv(1024)
+    if (msg == 'fim'):
+        break
 
-print('Recebido: ' + str(msg,  encoding='utf-8'))
+    # Envia a mensagem
+    sock.send(bytes(msg,  encoding='utf-8'))
+
+    # Recebe a mensagem do passivo
+    msg = sock.recv(1024)
+
+    print('Tradução: ' + str(msg,  encoding='utf-8'))
 
 # Fecha o socket
 sock.close()
