@@ -2,23 +2,25 @@ data = {}
 
 
 def populate_data():
-    data['Redes de Computadores'] = 'Computer Networks'
-    data['Enlace'] = 'Link'
-    data['Conexão'] = 'Connection'
-    data['Pacote'] = 'Packet'
-    data['Roteador'] = 'Router'
-    data['Mensagem'] = 'Message'
-    data['Porta'] = 'Port'
-    data['Protocolo'] = 'Protocol'
-    data['Servidor'] = 'Server'
-    data['Cliente'] = 'Client'
+    data['redes de computadores'] = 'Computer Networks'
+    data['enlace'] = 'Link'
+    data['conexão'] = 'Connection'
+    data['pacote'] = 'Packet'
+    data['roteador'] = 'Router'
+    data['mensagem'] = 'Message'
+    data['porta'] = 'Port'
+    data['protocolo'] = 'Protocol'
+    data['servidor'] = 'Server'
+    data['cliente'] = 'Client'
 
 
 def translate(word):
     if (data == {}):
         populate_data()
 
-    if (word in data):
-        return data[word]
+    lower_word = word.lower()
+
+    if (lower_word in data):
+        return data[lower_word]
     else:
         return None
