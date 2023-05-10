@@ -5,10 +5,9 @@ HOST = 'localhost'
 PORTA = 5000
 
 # Cria o socket
-sock = socket(AF_INET, SOCK_STREAM)
-sock.connect((HOST, PORTA))
+sock = socket(AF_INET, SOCK_DGRAM)
 
-print('Dicionário remoto usando TCP. Entre com a palavra a ser traduzida. Entre com \'fim\' para encerrar.')
+print('Dicionário remoto usando UDP. Entre com a palavra a ser traduzida. Entre com \'fim\' para encerrar.')
 
 while True:
     # Le a mensagem
@@ -18,10 +17,10 @@ while True:
         break
 
     # Envia a mensagem
-    sock.send(bytes(msg,  encoding='utf-8'))
+    sock.sendto(bytes(msg,  encoding='utf-8'), (HOST, PORTA))
 
     # Recebe a mensagem do passivo
-    msg = sock.recv(1024)
+    msg, _ = sock.recvfrom(1024)
 
     print('Tradução: ' + str(msg,  encoding='utf-8'))
 
